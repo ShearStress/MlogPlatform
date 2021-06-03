@@ -1,0 +1,120 @@
+User block functionalities:
+
+Differentiate cia user behavior, actionName.
+
+1. user log in                          actionName="logic"
+2. personal preferences                 actionName="userCenter"
+3. load in icons                        actionName="userIcon"
+4. modify user information              actionName="update"
+5. check whether nickname is unique     actionName="uniqueName"
+6. user log out                         actionName="logout"
+
+Via UserServlet's service method, get user behavior.
+
+1. get user behavior
+    String actionName = request.getParameter("actionName");
+
+2. call corresponded method to the behaviror
+    if ("login".equals(actionName)){
+          // login
+    } else if{
+    ...
+    }
+    ...
+
+
+USER LOGIN
+
+============================front end==========================
+1. add in form, set the properties of the form
+    action="user"  method="post"  id="loginForm"
+
+2.set value for name, modify value for id
+    set value for name and password
+    set remember me value
+    set a hidden field - actionName, to pass the user behavior
+
+3. in config.js, add events function for the button - checkLogin()
+    actually a form check
+    1) get name and password
+    2) tell if empty or not(reuse function in util.js), if empty, give out notification, else, submit form
+
+
+============================back end============================
+1. get parameters, name, password
+2. check whether parameter is empty
+    Using ResultInfo to encapsulate results, state, information
+    if empty:
+        set a state code, and notification
+        put ResultInfo in request
+        send to login page
+    else:
+        find user object using user name, is no user name,
+            set a state code, and notification
+            put ResultInfo in request
+            send to login page
+        else:
+            compare the password given by database with the one given by front end(password should be protected)
+            if (password is wrong):
+                set a state code, and notification
+                put ResultInfo in request
+                send to login page
+            else:
+                store user information to session
+                if user choose to remember me, (rem=1), store user information(name, pwd) to cookie and set invalid time
+                and respond to client ; if not, clean the original cookie information.
+
+                redirect to index page.
+
+Layers:
+
+    1. web layer (control layer: accept parameter, respond)
+        1. get parameter, name, password
+        2. use method in service layer, return a ResultInfo object
+        3. tell if log in successfully
+            fail:
+                put ResultInfo to request
+
+                redirect to login page
+            success:
+                store user information to session
+                if user choose to remember me, (rem=1), store user information(name, pwd) to cookie and set invalid time
+                and respond to client ; if not, clean the original cookie information.
+
+                redirect to index page.
+
+
+    2. service layer (parameter check, logic processing)
+        1. tell if empty parameters:
+            if empty:
+                set a state code, and notification
+                return ResultInfo
+
+        2. if not empty:
+            look up via user name and password
+
+        3. tell if user object is empty:
+            if empty:
+               set a state code, and notification
+               return ResultInfo
+
+            if not:
+                compare the password given by database with the one given by front end(password should be protected)
+                if (password is wrong):
+                    set a state code, and notification
+                    put ResultInfo in request
+                    send to login page
+                else:
+                    set a state code, and notification
+                    put ResultInfo in request
+                    send to login page
+
+    3. dao layer (data access, add/remove/modify/lookup in database)
+        using user name, return user object
+        1. get data base connection
+        2. define sql sentences
+        3. pre compile
+        4. set parameters
+        5. execute look up, return result
+        6. analysis result set
+        7. close resources
