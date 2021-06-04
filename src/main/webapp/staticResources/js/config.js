@@ -98,14 +98,14 @@
         var userPwd = $("#userPwd").val();
 
         // empty name check
-        if (isEmpty(userName)){
-            $("#msg").html("User Name can't be empty!");
-        }
-
-        //empty pwd check
-        if (isEmpty(userPwd)){
-            $("#msg").html("User Password can't be empty!");
-        }
+//        if (isEmpty(userName)){
+//            $("#msg").html("User Name can't be empty!");
+//        }
+//
+//        //empty pwd check
+//        if (isEmpty(userPwd)){
+//            $("#msg").html("User Password can't be empty!");
+//        }
 
         // submit form
         $("#loginForm").submit();
