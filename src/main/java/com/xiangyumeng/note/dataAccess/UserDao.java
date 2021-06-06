@@ -6,8 +6,36 @@ import com.xiangyumeng.note.utility.DBUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDao {
+
+
+    /**
+     * find object based on user name
+     * 1. sql sentence
+     * 2. set parameters
+     * 3, use methods in baseDao
+     * @param userName user name
+     * @return result
+     */
+    public User queryUserByName(String userName){
+        //1. define sql
+        String sql = "select * from tb_user where uname = ?";
+
+        //2. set parameters
+        List<Object> params = new ArrayList<>();
+        params.add(userName);
+
+        //3. userDao methods
+        User user = (User)BaseDao.queryRow(sql, params, User.class);
+
+        return user;
+    }
+
+
+
 
     /**
      *         using user name, return user object
@@ -21,7 +49,7 @@ public class UserDao {
      * @param userName user name
      * @return a User object
      */
-    public User queryUserByName(String userName){
+    public User queryUserByName02(String userName){
         User user = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
