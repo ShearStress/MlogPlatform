@@ -13,7 +13,7 @@ public class UserDao {
      *         using user name, return user object
      *         1. get data base connection
      *         2. define sql sentences
-     *         3. pre compile
+     *         3. pre compile - prepare statement
      *         4. set parameters
      *         5. execute look up, return result
      *         6. analysis result set
