@@ -35,6 +35,8 @@ public class UserServlet extends HttpServlet {
             //user login
             userLogin(req,resp);
         }
+
+
     }
 
     /**
@@ -52,48 +54,53 @@ public class UserServlet extends HttpServlet {
      *                 and respond to client ; if not, clean the original cookie information.
      *
      *                 redirect to index page.
-     * @param req a servlet request
-     * @param resp a servlet response
+     * @param request a servlet request
+     * @param response a servlet response
      */
-    private void userLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 1. get parameters
-        String userName = req.getParameter("userName");
-        String userPwd = req.getParameter("userPwd");
 
-        // 2. use method in service layer, return a ResultInfo object
+
+    private void userLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // 1. 获取参数 （姓名、密码）
+        String userName = request.getParameter("userName");
+        String userPwd = request.getParameter("userPwd");
+
+        // 2. 调用Service层的方法，返回ResultInfo对象
         ResultInfo<User> resultInfo = userService.userLogin(userName, userPwd);
 
-        // 3. tell if log in successfully
-        if (resultInfo.getCode() == 1){ // success
-            //store user information to session
-            req.setAttribute("user", resultInfo.getResult());
-
-            //if user choose to remember me, (rem=1), store user information(name, pwd) to cookie and set invalid time
-            String rem = req.getParameter("rem");
-            if ("1".equals(rem)){
-                // get cookie object
-                Cookie cookie = new Cookie("user", userName + "-" + userPwd);
-
-                //set valid period
+        // 3. 判断是否登录成功
+        if (resultInfo.getCode() == 1) { // 如果成功
+            //  将用户信息设置到session作用域中
+            request.getSession().setAttribute("user", resultInfo.getResult());
+            //  判断用户是否选择记住密码（rem的值是1）
+            String rem = request.getParameter("rem");
+            // 如果是，将用户姓名与密码存到cookie中，设置失效时间，并响应给客户端
+            if ("1".equals(rem)) {
+                // 得到Cookie对象
+                Cookie cookie = new Cookie("user",userName +"-"+userPwd);
+                // 设置失效时间
                 cookie.setMaxAge(3*24*60*60);
-
-                // respond to client
-                resp.addCookie(cookie);
-            } else{  // don't remember pwd
-                // and respond to client ; if not, clean the original cookie information.
+                // 响应给客户端
+                response.addCookie(cookie);
+            } else {
+                // 如果否，清空原有的cookie对象
                 Cookie cookie = new Cookie("user", null);
+                // 删除cookie，设置maxage为0
                 cookie.setMaxAge(0);
-                resp.addCookie(cookie);
+                // 响应给客户端
+                response.addCookie(cookie);
             }
+            // 重定向跳转到index页面
+            response.sendRedirect("index");
 
-            // redirect to index page
-            resp.sendRedirect("index.jsp");
-
-        } else{       // fail
-            //put ResultInfo to request
-            //redirect to login page
-            req.setAttribute("resultInfo", resultInfo);
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
+        } else { // 失败
+            // 将resultInfo对象设置到request作用域中
+            request.setAttribute("resultInfo", resultInfo);
+            // 请求转发跳转到登录页面
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
+
     }
+
+
 }

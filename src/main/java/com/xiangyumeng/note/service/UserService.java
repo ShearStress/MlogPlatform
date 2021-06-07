@@ -68,22 +68,23 @@ public class UserService {
             resultInfo.setCode(0);
             resultInfo.setMsg("This user does no exist!");
             return resultInfo;
-        } else{
-            // not empty, compare password
-            // first encrypt the password given by front-end using MD5 algorithm, since the password stored in database is encrypted.
-            userPwd = DigestUtil.md5Hex(userPwd);
-
-            // tell whether the encrypted password match the record in database.
-            if(!user.getUpwd().equals(userPwd)){
-                resultInfo.setCode(0);
-                resultInfo.setMsg("Wrong password!");
-                return resultInfo;
-            }
-            resultInfo.setCode(1);
-            resultInfo.setResult(user);
-            return resultInfo;
-
         }
+
+        // not empty, compare password
+        // first encrypt the password given by front-end using MD5 algorithm, since the password stored in database is encrypted.
+        userPwd = DigestUtil.md5Hex(userPwd);
+
+        // tell whether the encrypted password match the record in database.
+        if(!user.getUpwd().equals(userPwd)){
+            resultInfo.setCode(0);
+            resultInfo.setMsg("Wrong password!");
+            return resultInfo;
+        }
+        resultInfo.setCode(1);
+        resultInfo.setResult(user);
+        return resultInfo;
+
+
 
 
     }

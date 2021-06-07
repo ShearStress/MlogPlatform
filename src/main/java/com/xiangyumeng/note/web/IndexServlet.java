@@ -12,10 +12,10 @@ public class IndexServlet extends HttpServlet {
 
 
     @Override
-    protected void service(HttpServletRequest request, HttpServletResponse respond) throws ServletException, IOException {
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // set index, dynamically included
         request.setAttribute("changePage", "note/list.jsp");
 
-        request.getRequestDispatcher("index.jsp").forward(request,respond);
+        request.getRequestDispatcher("index.jsp").forward(request,response);
     }
 }
