@@ -44,6 +44,7 @@ import java.io.IOException;
  */
 @WebFilter("/*")
 public class LoginAccessFilter implements Filter {
+    // have to override functions to make WebFilter work :(
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -91,7 +92,6 @@ public class LoginAccessFilter implements Filter {
         }
 
 
-
         // automatically log in, if there is a cookie
         //from cookie object, get user name and password, automatically log in
         //1. get cookie array
@@ -120,10 +120,6 @@ public class LoginAccessFilter implements Filter {
 
             }
         }
-
-
-
-
 
 
 
