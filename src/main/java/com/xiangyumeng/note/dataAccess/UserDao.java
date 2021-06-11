@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-
+    /**
+     * data access layer
+     */
 
     /**
      * find object based on user name
