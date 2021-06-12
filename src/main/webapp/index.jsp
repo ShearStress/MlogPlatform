@@ -61,7 +61,7 @@
 	<div class="row-fluid">
 		<div class="col-md-3">
 			<div class="data_list">
-				<div class="data_list_title"><span class="glyphicon glyphicon-user"></span>&nbsp;个人中心&nbsp;&nbsp;&nbsp;&nbsp;<a href="logout">退出</a></div>
+				<div class="data_list_title"><span class="glyphicon glyphicon-user"></span>&nbsp;个人中心&nbsp;&nbsp;&nbsp;&nbsp;<a href="user?actionName=logout">退出</a></div>
 				<div class="userimg">
 					<img src="staticResources/images/h2.jpg">
 				</div>

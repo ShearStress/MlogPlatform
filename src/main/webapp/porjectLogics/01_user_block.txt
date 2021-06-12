@@ -23,7 +23,7 @@ Via UserServlet's service method, get user behavior.
     ...
 
 
-USER LOGIN
+I. USER LOGIN
 
 ============================front end==========================
 1. add in form, set the properties of the form
@@ -118,3 +118,14 @@ Layers:
         5. execute look up, return result
         6. analysis result set
         7. close resources
+
+
+
+II. User log out
+    ++++ back end +++++
+    1. destroy session object
+    2. delete cookie object
+    3. redirect to log in page
+
+    +++ front end +++
+    1. set address of the link     user?actionName=logout

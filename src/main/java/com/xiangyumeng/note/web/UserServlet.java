@@ -36,8 +36,37 @@ public class UserServlet extends HttpServlet {
             userLogin(req,resp);
         }
 
+        else if ("logout".equals(actionName)){
+            //user logout
+            userLogOut(req, resp);
+        }
+
 
     }
+
+
+    /**
+     * user logout
+     *    1. destroy session object
+     *    2. delete cookie object
+     *    3. redirect to log in page
+     * @param request request
+     * @param response respond
+     */
+    private void userLogOut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //1. destroy session object
+        request.getSession().invalidate();
+
+        //2. delete cookie object
+        Cookie cookie = new Cookie("user", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        //3. redirect to log in page
+        response.sendRedirect("login.jsp");
+    }
+
+
 
     /**
      * USER LOGIN
@@ -85,7 +114,7 @@ public class UserServlet extends HttpServlet {
             } else {
                 // 如果否，清空原有的cookie对象
                 Cookie cookie = new Cookie("user", null);
-                // 删除cookie，设置maxage为0
+                // 删除cookie，设置max age为0
                 cookie.setMaxAge(0);
                 // 响应给客户端
                 response.addCookie(cookie);
