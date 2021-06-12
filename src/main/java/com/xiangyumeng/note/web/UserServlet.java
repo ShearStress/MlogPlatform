@@ -27,6 +27,9 @@ public class UserServlet extends HttpServlet {
      */
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // set index navigation high light
+        req.setAttribute("menu_page", "user");
+
         // receive user behavior
         String actionName = req.getParameter("actionName");
 
@@ -41,7 +44,28 @@ public class UserServlet extends HttpServlet {
             userLogOut(req, resp);
         }
 
+        else if ("userCenter".equals(actionName)){
+            // user center page
+            userCenter(req, resp);
+        }
 
+
+    }
+
+
+    /**
+     * get into user center
+     *      1. set index dynamically include page value
+     *      2。 request to redirect to index
+     * @param request request
+     * @param response response
+     */
+    private void userCenter(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //1. set index dynamically include page value
+        request.setAttribute("changePage", "user/info.jsp");
+
+        //2.  request to redirect to index
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
 

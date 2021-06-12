@@ -40,11 +40,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="main"><i class="glyphicon glyphicon-cloud"></i>&nbsp;主&nbsp;&nbsp;页</a></li>
-        <li><a href="note"><i class="glyphicon glyphicon-pencil"></i>&nbsp;发表云记</a></li>
-        <li><a href="type"><i class="glyphicon glyphicon-list"></i>&nbsp;类别管理</a></li>
-        <li><a href="user"><i class="glyphicon glyphicon-user"></i>&nbsp;个人中心</a>
-        	<li><a href="report"><i class="glyphicon glyphicon-signal"></i>&nbsp;数据报表</a></li>
+        <li <c:if test="${menu_page=='index'}">class="active"</c:if> ><a href="index"><i class="glyphicon glyphicon-cloud"></i>&nbsp;主&nbsp;&nbsp;页</a></li>
+        <li <c:if test="${menu_page=='note'}">class="active"</c:if> ><a href="note"><i class="glyphicon glyphicon-pencil"></i>&nbsp;发表云记</a></li>
+        <li <c:if test="${menu_page=='type'}">class="active"</c:if> ><a href="type"><i class="glyphicon glyphicon-list"></i>&nbsp;类别管理</a></li>
+        <li <c:if test="${menu_page=='user'}">class="active"</c:if> ><a href="user?actionName=userCenter"><i class="glyphicon glyphicon-user"></i>&nbsp;个人中心</a>
+        <li <c:if test="${menu_page=='report'}">class="active"</c:if> ><a href="report"><i class="glyphicon glyphicon-signal"></i>&nbsp;数据报表</a></li>
 
       </li></ul>
       <form class="navbar-form navbar-right" role="search" action="main">
@@ -121,6 +121,8 @@
 
     <%-- dynamically changing the displaying pages --%>
 
+    ${changePage}
+
     <c:if test="${empty changePage}">
         <jsp:include page="note/list.jsp"></jsp:include>
     </c:if>
@@ -129,6 +131,8 @@
     <c:if test="${!empty changePage}">
         <jsp:include page="${changePage}"></jsp:include>
     </c:if>
+
+
 
 </div>
 

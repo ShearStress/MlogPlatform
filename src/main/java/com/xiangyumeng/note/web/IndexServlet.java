@@ -13,6 +13,9 @@ public class IndexServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // set index navigation high light
+        request.setAttribute("menu_page", "index");
+
         // set index, dynamically included
         request.setAttribute("changePage", "note/list.jsp");
 
