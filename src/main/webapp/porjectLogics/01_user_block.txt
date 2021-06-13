@@ -129,3 +129,28 @@ II. User log out
 
     +++ front end +++
     1. set address of the link     user?actionName=logout
+
+
+III. User center
+    ++ front end
+    set link
+    using EL formula to get info from session field
+
+    ++ back end
+    1. set index dynamically included value
+    2. request to redirect to index.jsp
+
+IV. loading head icons
+    ++ front end
+    set img label - src attributes, request back end to load icon
+
+    src="user?actionName=userHead&imageName=image name"  get from session
+
+
+    ++ back end
+    1. get parameters (image name)
+    2. get path for the image (request.getServletContext().getRealPath("/");
+    3. via image path, get file object
+    4. get postfix of the image
+    5. via different postfix, set different types of response
+    6. FileUtils.copy(), copy the image to browser

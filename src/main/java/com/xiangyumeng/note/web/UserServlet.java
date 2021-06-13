@@ -1,9 +1,11 @@
 package com.xiangyumeng.note.web;
 
 
+import cn.hutool.core.io.FileUtil;
 import com.xiangyumeng.note.persistantObject.User;
 import com.xiangyumeng.note.service.UserService;
 import com.xiangyumeng.note.valueObject.ResultInfo;
+import org.apache.commons.io.FileUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 
 @WebServlet("/user")
@@ -48,8 +51,51 @@ public class UserServlet extends HttpServlet {
             // user center page
             userCenter(req, resp);
         }
+        
+        else if ("userHead".equals(actionName)){
+            //loading user icon
+            userHead(req, resp);
+        }
 
 
+    }
+
+
+    /**
+     * loading icons
+     *     1. get parameters (image name)
+     *     2. get path for the image (request.getServletContext().getRealPath("/");
+     *     3. via image path, get file object
+     *     4. get postfix of the image
+     *     5. via different postfix, set different types of response
+     *     6. FileUtils.copy(), copy the image to browser
+     * @param request request
+     * @param response response
+     */
+    private void userHead(HttpServletRequest request, HttpServletResponse response) throws IOException {
+         //1. get parameters (image name)
+        String head = request.getParameter("imageName");
+
+         //2. get path for the image (request.getServletContext().getRealPath("/");
+        String realPath = request.getServletContext().getRealPath("/WEB-INF/upload/");
+
+         //3. via image path, get file object
+        File file = new File(realPath + "/" + head);
+
+         //4. get postfix of the image
+        String pic = head.substring(head.lastIndexOf(".") + 1);
+
+         //5. via different postfix, set different types of response
+        if ("PNG".equalsIgnoreCase(pic)){
+            response.setContentType("image/png");
+        } else if("JPG".equalsIgnoreCase(pic) || "JPEG".equalsIgnoreCase(pic)){
+            response.setContentType("image/jpeg");
+        } else if ("GIF".equalsIgnoreCase(pic)){
+            response.setContentType("image/gif");
+        }
+
+         //6. FileUtils.copy(), copy the image to browser
+        FileUtils.copyFile(file, response.getOutputStream());
     }
 
 

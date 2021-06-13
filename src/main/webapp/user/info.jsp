@@ -33,7 +33,7 @@
 			  </div>
 			</form>
 	  	</div>
-  		<div class="col-md-4"><img style="width:260px;height:200px" src="${user.head}"></div>
+  		<div class="col-md-4"><img style="width:240px;height:180px" src="user?actionName=userHead&imageName=${user.head}"></div>
 	  </div>
 	</div>
 </div>
