@@ -154,3 +154,41 @@ IV. loading head icons
     4. get postfix of the image
     5. via different postfix, set different types of response
     6. FileUtils.copy(), copy the image to browser
+
+
+V. uniqueness of nickname
+    ++ front end
+        nickname text frame blur and focus event
+        blur:
+            1. get value in frame
+            2. if value if empty, notify user, disable button
+            3. if modified, same as the one in session field?
+            4. if same, return
+            5. modified, ajax request to test weather nickname is valid
+
+
+        focus:
+            1. clean notification
+            2. button enabled
+
+    ++ back end
+        web layer:
+            1. get parameter
+            2. get user info from session
+            3. use method in service layer, get result
+            4. output stream, respond to ajax method
+            5. close resource
+
+        Service layer:
+            1. if empty?
+            2. empty, return 0
+            3. call function in Dao, use userID and nickName, get use object
+            4. if user object exist, return 0
+            4. else return 1.
+
+        Data access layer:
+            1. sql: if any other users using this nickname except me?
+                select * from tb_user where nick = ? and userId != ?
+
+            2. set parameter
+            3. use baseDao

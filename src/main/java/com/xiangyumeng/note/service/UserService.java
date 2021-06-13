@@ -88,4 +88,35 @@ public class UserService {
 
 
     }
+
+
+    /**
+     * check uniquness
+     *             1. if empty?
+     *             2. empty, return 0
+     *             3. call function in Dao, use userID and nickName, get use object
+     *             4. if user object exist, return 0
+     *             4. else return 1.
+     * @param nick nick
+     * @param userId user id
+     * @return right 1, not 0
+     */
+    public Integer checkNick(String nick, Integer userId) {
+        //1. if empty?
+        if (StrUtil.isBlank(nick)){
+            return 0;
+        }
+        //2. empty, return 0
+
+        //3. call function in Dao, use userID and nickName, get use object
+        User user = userDao.queryUserByNickAndId(nick, userId);
+
+        //4. if user object exist, return 0
+        if (user != null){
+            return 0;
+        }
+
+        //4. else return 1.
+        return 1;
+    }
 }

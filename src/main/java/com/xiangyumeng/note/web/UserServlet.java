@@ -57,7 +57,40 @@ public class UserServlet extends HttpServlet {
             userHead(req, resp);
         }
 
+        else if ("checkNick".equals(actionName)){
+            //uniqueness
+            checkNick(req, resp);
+        }
 
+
+    }
+
+
+    /**
+     * check uniqueness
+     *             1. get parameter
+     *             2. get user info from session
+     *             3. use method in service layer, get result
+     *             4. output stream, respond to ajax method
+     *             5. close resource
+     * @param request request
+     * @param response response
+     */
+    private void checkNick(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //1. get parameter
+        String nick = request.getParameter("nick");
+
+        //2. get user info from session
+        User user = (User) request.getSession().getAttribute("user");
+
+        //3. use method in service layer, get result
+        Integer code = userService.checkNick(nick, user.getUserId());
+
+        //4. output stream, respond to ajax method
+        response.getWriter().write(code+"");
+
+        //5. close resource
+        response.getWriter().close();
     }
 
 

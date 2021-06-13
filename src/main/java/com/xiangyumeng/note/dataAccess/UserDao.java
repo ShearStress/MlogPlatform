@@ -97,4 +97,27 @@ public class UserDao {
 
         return user;
     }
+
+    /**
+     *            1. sql: if any other users using this nickname except me?
+     *                 select * from tb_user where nick = ? and userId != ?
+     *
+     *             2. set parameter
+     * @param nick nick
+     * @param userId user id
+     * @return the user found
+     */
+    public User queryUserByNickAndId(String nick, Integer userId) {
+
+        //1. sql: if any other users using this nickname except me?
+        String sql = "select * from tb_user where nick = ? and userId != ?";
+
+        //2. set parameter
+        List<Object> params = new ArrayList<>();
+        params.add(nick);
+        params.add(userId);
+
+        User user = (User) BaseDao.queryRow(sql, params, User.class);
+        return user;
+    }
 }

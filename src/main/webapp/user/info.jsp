@@ -8,7 +8,7 @@
 	<div class="container-fluid">
 	  <div class="row" style="padding-top: 20px;">
 	  	<div class="col-md-8">
-	  		<form class="form-horizontal" method="post" action="user?act=save" enctype="multipart/form-data" onsubmit="return checkUser();">
+	  		<form class="form-horizontal" method="post" action="user?act=save" enctype="multipart/form-data">
 			  <div class="form-group">
 			  	<input type="hidden" name="act" value="save">
 			    <label for="nickName" class="col-sm-2 control-label">昵称:</label>
@@ -28,7 +28,7 @@
 			  </div>
 			  <div class="form-group">
 			    <div class="col-sm-offset-2 col-sm-10">
-			      <button type="submit" id="btn" class="btn btn-success">修改</button>&nbsp;&nbsp;<span style="color:red" id="msg"></span>
+			      <button type="submit" id="btn" class="btn btn-success">修改</button>&nbsp;&nbsp;<span style="color:red; font-size: 12px" id="msg"></span>
 			    </div>
 			  </div>
 			</form>
@@ -39,3 +39,49 @@
 </div>
 
 </div>
+
+
+<script type="text/javascript">
+
+    $("#nickName").blur(function (){
+        var nickName = $("#nickName").val();
+
+        if (isEmpty(nickName)){
+            $("#msg").html("Nick name cannot be empty")
+            $("#btn").prop("disabled", true);
+            return;
+        }
+
+        var nick = '${user.nick}';
+
+        if (nickName == nick){
+            return;
+        }
+
+        $.ajax({
+            type:"get",
+            url:"user",
+            data:{
+                actionName:"checkNick",
+                nick:nickName
+            },
+            success:function(result){
+                if (result == 1){
+                    $("#msg").html("")
+                    $("#btn").prop("disabled", false);
+                } else{
+                    $("#msg").html("Existed nick name.")
+                    $("#btn").prop("disabled", true);
+                }
+            }
+        });
+
+    }).focus(function () {
+
+        $("#msg").html("")
+        $("#btn").prop("disabled", false);
+
+    });
+
+
+</script>

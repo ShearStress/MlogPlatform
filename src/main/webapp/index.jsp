@@ -12,6 +12,9 @@
 <script src="staticResources/js/jquery-1.11.3.js"></script>
 <script src="staticResources/bootstrap/js/bootstrap.js"></script>
 <script src="staticResources/sweetalert/sweetalert2.min.js"></script>
+
+<script src="staticResources/js/util.js"></script>
+
 <!-- 配置文件 -->
 <script type="text/javascript" src="./主页_files/ueditor.config.js"></script>
 <!-- 编辑器源码文件 -->
