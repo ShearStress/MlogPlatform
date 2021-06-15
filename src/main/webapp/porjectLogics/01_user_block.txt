@@ -192,3 +192,21 @@ V. uniqueness of nickname
 
             2. set parameter
             3. use baseDao
+
+VI. modify user info
+
+    +++front end
+        submit form
+        1. form
+            type      enctype="multipart/form-data"
+            method    method="post"
+        2. form element
+            set name  (nick name, mood, icon...)
+            set hidden field (user behavior, actionName)
+
+
+    +++back end
+        web layer:
+
+        service layer:
+

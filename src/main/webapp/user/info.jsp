@@ -10,7 +10,7 @@
 	  	<div class="col-md-8">
 	  		<form class="form-horizontal" method="post" action="user?act=save" enctype="multipart/form-data">
 			  <div class="form-group">
-			  	<input type="hidden" name="act" value="save">
+			  	<input type="hidden" name="actionName" value="updateUser">
 			    <label for="nickName" class="col-sm-2 control-label">昵称:</label>
 			    <div class="col-sm-3">
 			      <input class="form-control" name="nick" id="nickName" placeholder="昵称" value="${user.nick}">
@@ -28,7 +28,7 @@
 			  </div>
 			  <div class="form-group">
 			    <div class="col-sm-offset-2 col-sm-10">
-			      <button type="submit" id="btn" class="btn btn-success">修改</button>&nbsp;&nbsp;<span style="color:red; font-size: 12px" id="msg"></span>
+			      <button type="submit" id="btn" class="btn btn-success" onclick="return updateUser">修改</button>&nbsp;&nbsp;<span style="color:red; font-size: 12px" id="msg"></span>
 			    </div>
 			  </div>
 			</form>
@@ -82,6 +82,17 @@
         $("#btn").prop("disabled", false);
 
     });
+
+    function updateUser(){
+        var nickName = $("#nickName").val();
+
+        if (isEmpty(nickName)){
+            $("#msg").html("Nick name cannot be empty")
+            $("#btn").prop("disabled", true);
+            return false;
+        }
+        return true;
+    }
 
 
 </script>
