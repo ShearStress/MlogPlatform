@@ -8,15 +8,18 @@ import com.xiangyumeng.note.valueObject.ResultInfo;
 import org.apache.commons.io.FileUtils;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Result;
 import java.io.File;
 import java.io.IOException;
 
 @WebServlet("/user")
+@MultipartConfig
 public class UserServlet extends HttpServlet {
 
     private UserService userService = new UserService();
@@ -61,6 +64,27 @@ public class UserServlet extends HttpServlet {
             //uniqueness
             checkNick(req, resp);
         }
+
+        else if ("updateUser".equals(actionName)){
+            // update user info
+            updateUser(req, resp);
+        }
+
+
+    }
+
+
+    /**
+     * update user info
+     * @param request req
+     * @param response resp
+     */
+    private void updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ResultInfo<User> resultInfo = userService.updateUser(request);
+
+        request.setAttribute("resultInfo", resultInfo);
+
+        request.getRequestDispatcher("user?actionName=userCenter").forward(request, response);
 
 
     }

@@ -6,6 +6,9 @@ import com.xiangyumeng.note.dataAccess.UserDao;
 import com.xiangyumeng.note.persistantObject.User;
 import com.xiangyumeng.note.valueObject.ResultInfo;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+
 public class UserService {
 
     private UserDao userDao = new UserDao();
@@ -118,5 +121,82 @@ public class UserService {
 
         //4. else return 1.
         return 1;
+    }
+
+    /**
+     * modify user info
+     *             1. get parameters (nickname, mood)
+     *             2. non-empty check
+     *                 1） nick name is empty. send error and state code to resultInfo and return
+     *
+     *             3. get user object from session field (get user default icon)
+     *             4. uploading file
+     *                 1) get part object, request.getPart("name");
+     *                 2) via part object, upload file name
+     *                 3) check if file name empty
+     *                 4) if not, get path of file
+     *             5. update user icon
+     *             6. user dao layer function, rerturn rows that are affected
+     *             7. check rows value
+     *             8. return
+     * @param request
+     * @return
+     */
+    public ResultInfo<User> updateUser(HttpServletRequest request) {
+        ResultInfo<User> resultInfo = new ResultInfo<>();
+        //1. get parameters (nickname, mood)
+        String nick = request.getParameter("nick");
+        String mood = request.getParameter("mood");
+
+        //2. non-empty check
+        if (StrUtil.isBlank(nick)){
+            resultInfo.setCode(0);
+            resultInfo.setMsg("user nick name can not be empty");
+            return resultInfo;
+        }
+
+        // 3. get user object from session field (get user default icon)
+        User user = (User) request.getSession().getAttribute("user");
+        user.setNick(nick);
+        user.setMood(mood);
+
+        //4. uploading file
+        try{
+            //1) get part object, request.getPart("name");
+            Part part = request.getPart("img");
+
+            //2) via part object, upload file name
+            String header = part.getHeader("Content-Disposition");
+            String str = header.substring(header.lastIndexOf("=") + 2);
+
+            //3) check if file name empty
+            String fileName = str.substring(0, str.length()-1);
+
+            if (!StrUtil.isBlank(fileName)){
+                //4) if not, get path of file
+                //5. update user icon
+                String filePath = request.getServletContext().getRealPath("/WEB-INF/upload/");
+                part.write(filePath + "/" + fileName);
+            }
+
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+        //6. user dao layer function, return rows that are affected
+        int row = userDao.updateUser(user);
+
+        //7. check rows value
+        if (row>0){
+            resultInfo.setCode(1);
+            request.getSession().setAttribute("user", user);
+        } else{
+            resultInfo.setCode(0);
+            resultInfo.setMsg("update fail!");
+        }
+        //8. return
+        return resultInfo;
     }
 }

@@ -207,6 +207,36 @@ VI. modify user info
 
     +++back end
         web layer:
+            note: file uploading, you must add notation at servlet class!!!!!
+            @MultipartConfig
+            1. use method in service layer, pass in a whole request object as parameter, return resultInfo
+            2. save resultInfo into request field
+            3. request to redirect to user center page (user?actionName=userCenter)
 
         service layer:
+            1. get parameters (nickname, mood)
+            2. non-empty check
+                1） nick name is empty. send error and state code to resultInfo and return
+
+            3. get user object from session field (get user default icon)
+            4. uploading file
+                1) get part object, request.getPart("name");
+                2) via part object, upload file name
+                3) check if file name empty
+                4) if not, get path of file
+            5. update user icon
+            6. user dao layer function, rerturn rows that are affected
+            7. check rows value
+            8. return
+
+
+        dao layer:
+
+            modify using userId
+            1. define sql
+                String sql = "update tb_user set nick = ?, mood = ?, head = ? where userId = ?";
+
+            2. set parameters
+            3. via baseDao method, update
+            4. return number of rows that are affected.
 
