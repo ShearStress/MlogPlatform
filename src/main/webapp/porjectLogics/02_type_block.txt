@@ -1,0 +1,34 @@
+user behavior     actionName
+search type list  actionName=list
+delete type       actionName=delete
+add/modify        actionName=addOrUpdate
+
+
+I. search type list
+    ++++front end
+
+
+
+
+
+
+    +++++back end
+        web layer:
+            1. get user object in session field
+            2. user search method in service layer, search for the collection of types of current log-in user, return collection.
+            3. put type list into request field
+            4. index dynamically included value
+            5. request to redirect to index.jsp
+
+
+        service layer:
+            1. user dao layer search method, via userId, get type list
+            2. return a collection of types
+
+
+        dao layer:
+            1. define sql:
+                String sql = "select typeId, typeName, userId from tb_note_type where userId = ?"
+
+            2. set parameters
+            3. use basedao search method, return a collection
