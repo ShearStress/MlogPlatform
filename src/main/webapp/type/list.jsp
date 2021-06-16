@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset-UTF-8" language="java" isELIgnored="false" pageEncoding="UTF-8"%>
 	<div class="col-md-9">
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="data_list">
 	<div class="data_list_title">
@@ -11,52 +11,35 @@
 
 	 </div>
 	<div>
+
+	    <c:if test="${empty typeList}">
+            <h2> no such type data!</h2>
+	    </c:if>
+
+        <c:if test="${!empty typeList}">
+
 	 	<table class="table table-hover table-striped ">
-	 		<tbody><tr>
-	 			<th>编号</th>
-	 			<th>类型</th>
-	 			<th>操作</th>
-	 		</tr>
+	 		<tbody>
+                <tr>
+                    <th>编号</th>
+                    <th>类型</th>
+                    <th>操作</th>
+                </tr>
 
+                <c:forEach items="${typeList}" var="item">
+                    <tr>
+                        <td>${item.typeId}</td>
+                        <td>${item.typeName}</td>
+                        <td>
+                        <button class="btn btn-primary" type="button">修改</button>&nbsp;
+                        <button class="btn btn-danger del" type="button">删除</button>
+                        </td>
+                    </tr>
+                </c:forEach>
+		    </tbody>
+		</table>
+		</c:if>
 
-	 		<tr>
-	 			<td>2</td>
-	 			<td>技术</td>
-	 			<td>
-	 			<button class="btn btn-primary" type="button">修改</button>&nbsp;
-	 			<button class="btn btn-danger del" type="button">删除</button>
-	 			</td>
-	 		</tr>
-
-	 		<tr>
-	 			<td>3</td>
-	 			<td>笔记</td>
-	 			<td>
-	 			<button class="btn btn-primary" type="button">修改</button>&nbsp;
-	 			<button class="btn btn-danger del" type="button">删除</button>
-	 			</td>
-	 		</tr>
-
-	 		<tr>
-	 			<td>4</td>
-	 			<td>语录</td>
-	 			<td>
-	 			<button class="btn btn-primary" type="button">修改</button>&nbsp;
-	 			<button class="btn btn-danger del" type="button">删除</button>
-	 			</td>
-	 		</tr>
-
-	 		<tr>
-	 			<td>5</td>
-	 			<td>test</td>
-	 			<td>
-	 			<button class="btn btn-primary" type="button">修改</button>&nbsp;
-	 			<button class="btn btn-danger del" type="button">删除</button>
-	 			</td>
-	 		</tr>
-
-
-		</tbody></table>
 	</div>
 </div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

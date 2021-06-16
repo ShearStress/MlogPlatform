@@ -1,8 +1,11 @@
 package com.xiangyumeng.note.web;
 
+import com.alibaba.fastjson.JSON;
 import com.xiangyumeng.note.persistantObject.NoteType;
 import com.xiangyumeng.note.persistantObject.User;
 import com.xiangyumeng.note.service.NoteTypeService;
+import com.xiangyumeng.note.utility.JsonUtil;
+import com.xiangyumeng.note.valueObject.ResultInfo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet("/type")
@@ -19,6 +23,9 @@ public class NoteTypeServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // high light value
+        request.setAttribute("menu_page", "type");
+
         //get user behavior
         String actionName = request.getParameter("actionName");
 
@@ -28,7 +35,30 @@ public class NoteTypeServlet extends HttpServlet {
             typeList(request, response);
 
         }
+
+        else if ("delete".equals(actionName)){
+            deleteType(request, response);
+        }
     }
+
+
+    /**
+     * delete type
+     * @param request req
+     * @param response resp
+     */
+    private void deleteType(HttpServletRequest request, HttpServletResponse response) {
+        //1. receive params
+        String typeId = request.getParameter("typeId");
+
+        //2. update operation in service layer, return resultInfo
+        ResultInfo<NoteType> resultInfo = typeService.deleteType(typeId);
+
+        //3. convert resultInfo object to json format String, respond to ajax method
+        // respond type
+        JsonUtil.toJson(response, resultInfo);
+    }
+
 
     /**
      *  search for user type list

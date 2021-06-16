@@ -6,6 +6,15 @@ add/modify        actionName=addOrUpdate
 
 I. search type list
     ++++front end
+        set href value for "type management" in navigation bar
+            href="user?actionName=list"
+        set navigation bar highlight
+            menu page via request
+
+        receive response data
+            via JSTL if label, check if type of collection exists
+                not, give out notification
+                yes, iterate
 
 
 
@@ -32,3 +41,30 @@ I. search type list
 
             2. set parameters
             3. use basedao search method, return a collection
+
+
+II. delete
+    ++++front end
+
+
+
+
+    ++++back end
+        web layer:
+            1. receive parameters, typeID
+            2. update operation in service layer, return resultInfo
+            3. convert resultInfo object to json format String, respond to ajax method
+
+        service layer:
+            1. check if params is empty
+            2. call dao layer, search cloud blog numbers via typeId
+            3. if # > 0, can be deleted
+                code =0, msg="this record can not be deleted"
+            4. if no record, use update method in dao layer, delete it
+            5. if return value > 1, code=1, else, code=0, msg="deletion failed!"
+
+        dao layer:
+            1. search for cloud blog numbers via typeId
+            2. delete type records based on typeId
+
+

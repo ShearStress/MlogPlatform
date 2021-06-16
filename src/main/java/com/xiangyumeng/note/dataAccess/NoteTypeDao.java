@@ -28,4 +28,41 @@ public class NoteTypeDao {
         List<NoteType> list = BaseDao.queryRows(sql, params, NoteType.class);
         return list;
     }
+
+
+    /**
+     * search for cloud blog numbers via typeId
+     * @param typeId type id
+     * @return number of records
+     */
+    public long findNoteCountByTypeId(String typeId) {
+        // sql
+        String sql = "select count(1) from tb_note where typeId = ?";
+
+        // prams
+        List<Object> params = new ArrayList<>();
+        params.add(typeId);
+
+        // base dao
+        long count = (long) BaseDao.findSingleValue(sql, params);
+
+        return count;
+    }
+
+
+    /**
+     * delete type records based on typeId
+     * @param typeId type id
+     * @return result
+     */
+    public int deleteTypeById(String typeId) {
+        String sql = "delete from tb_note where typeId = ?";
+
+        // prams
+        List<Object> params = new ArrayList<>();
+        params.add(typeId);
+
+        int row = BaseDao.executeUpdate(sql, params);
+        return row;
+    }
 }
