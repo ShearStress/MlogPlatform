@@ -18,7 +18,7 @@ public class NoteTypeDao {
     public List<NoteType> findTypeListByUserId(Integer userId){
 
         //1. define sql:
-        String sql = "select typeId, typeName, userId from tb_note_type where userId = ?";
+        String sql =  "select typeId,typeName,userId from tb_note_type where userId = ? ";
 
         //2. set parameters
         List<Object> params = new ArrayList<>();
@@ -56,7 +56,7 @@ public class NoteTypeDao {
      * @return result
      */
     public int deleteTypeById(String typeId) {
-        String sql = "delete from tb_note where typeId = ?";
+        String sql = "delete from tb_note_type where typeId = ?";
 
         // prams
         List<Object> params = new ArrayList<>();

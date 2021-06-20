@@ -45,6 +45,16 @@ I. search type list
 
 II. delete
     ++++front end
+        "delete" button attached with an event(parameter:typeId)
+            1. pop put notification, check if delete
+            2. if confirmed, send ajax request to delete, return resultInfo
+                if failed, notify msg=""
+                    table id = "myTable"
+                    div id ='myDiv"
+
+                if success, set = 1
+                1. remove certain tr record
+                2. delete info in navigation dock
 
 
 
