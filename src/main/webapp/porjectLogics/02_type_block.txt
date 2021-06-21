@@ -56,7 +56,7 @@ II. delete
                 1. remove certain tr record
                 2. delete info in navigation dock
 
-    ///
+
 
 
     ++++back end
