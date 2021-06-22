@@ -78,3 +78,25 @@ II. delete
             2. delete type records based on typeId
 
 
+III. add/modify type
+
+    +++front end
+        a. open "add frame" modal
+            add type button event
+            1. set modal title
+            2. clean text value and hidden value
+            3. open modal again
+
+        b. open "modify frame" modal
+            1. set modal title
+            2. set current record's typeId and typeName to modal frame.
+            3. open modal, show it.
+
+
+        c. modal save button associate with on click event
+            add/modify
+            1. get params
+                add:typeName; modify:typeName, typeId
+            2. if params is empty, notify and return
+            3. if not, send ajax request, execute add/modify, return resultInfo
+            4. check if updated successfully
