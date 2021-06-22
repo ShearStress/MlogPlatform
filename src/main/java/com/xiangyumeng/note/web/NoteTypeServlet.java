@@ -39,6 +39,33 @@ public class NoteTypeServlet extends HttpServlet {
         else if ("delete".equals(actionName)){
             deleteType(request, response);
         }
+
+        else if ("addOrUpdate".equals(actionName)){
+            addOrUpdate(request, response);
+        }
+    }
+
+    /**
+     *            1. receive parameters
+     *             2. get user object from session, get userID
+     *             3. use update method in service layer, return an resultInfo object
+     *             4. respond to ajax
+     * @param request req
+     * @param response resp
+     */
+    private void addOrUpdate(HttpServletRequest request, HttpServletResponse response) {
+        //1. receive parameters
+        String typeName = request.getParameter("typeName");
+        String typeId = request.getParameter("typeId");
+
+        //2. get user object from session, get userID
+        User user = (User) request.getSession().getAttribute("user");
+
+        //3. use update method in service layer, return an resultInfo object
+        ResultInfo<Integer> resultInfo = typeService.addOrUpdate(typeName, user.getUserId(), typeId);
+
+        //4. respond to ajax
+        JsonUtil.toJson(response, resultInfo);
     }
 
 

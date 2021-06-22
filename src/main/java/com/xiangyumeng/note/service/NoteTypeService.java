@@ -60,4 +60,46 @@ public class NoteTypeService {
 
         return resultInfo;
     }
+
+    /**
+     *
+     * @param typeName type name
+     * @param userId use id
+     * @param typeId type id
+     * @return
+     */
+    public ResultInfo<Integer> addOrUpdate(String typeName, Integer userId, String typeId) {
+        ResultInfo<Integer> resultInfo = new ResultInfo<>();
+
+        if (StrUtil.isBlank(typeName)){
+            resultInfo.setCode(0);
+            resultInfo.setMsg("type name can not be empty!");
+            return resultInfo;
+        }
+
+        Integer code = typeDao.checkTypeName(typeName, userId, typeId);
+
+        if (code == 0){
+            resultInfo.setCode(0);
+            resultInfo.setMsg("type name exists!");
+            return resultInfo;
+        }
+
+        Integer key = null;
+        if (StrUtil.isBlank(typeId)){
+            key = typeDao.addType(typeName, userId);
+        } else{
+            key = typeDao.updateType(typeName, typeId);
+        }
+
+        if (key > 0){
+            resultInfo.setCode(1);
+            resultInfo.setResult(key);
+        } else{
+            resultInfo.setCode(0);
+            resultInfo.setMsg("Update failed!");
+        }
+
+        return resultInfo;
+    }
 }
