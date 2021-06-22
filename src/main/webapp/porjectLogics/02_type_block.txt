@@ -100,3 +100,34 @@ III. add/modify type
             2. if params is empty, notify and return
             3. if not, send ajax request, execute add/modify, return resultInfo
             4. check if updated successfully
+
+    +++back end
+
+        web layer:
+            1. receive parameters
+            2. get user object from session, get userID
+            3. use update method in service layer, return an resultInfo object
+            4. respond to ajax
+
+
+        service layer:
+            1. check if params is empty
+                empty: code = 0, msg="", return
+
+            2. Use dao layer, check if this name is unique return 0/1.
+
+            3. check if id is empty
+                empty: use add method in dao layer, return main key
+                not: use modify method in dao layer, return number of rows that are affected
+
+            4. check if mainkey/numRows > 0
+                larger than 0: code = 1, result = main key
+                else: code = 0, msg = ""
+
+        Dao layer:
+            1. under this user, check if type name is unique
+
+            2. add method, return main key
+
+            3. modify method, return numRows
+
