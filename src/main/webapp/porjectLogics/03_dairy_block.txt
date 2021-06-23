@@ -20,3 +20,14 @@ I. publish blog page
         3. set into request
         4. dynamically included index page
         5. request to redirect to index.jsp
+
+II. load rich text editor
+    1. download rich text editor (utf-8)
+    2. copy utf8-jsp to static resources
+    3. modify the director name to be ueditor
+    4. add dependency
+    5. modify configurations - window.UEDITOR_HOME_URL = "/note/staticResources/ueditor/";
+    6. use rick text edition
+        1. import js file
+        2. prepare a container， set attributes
+        3. load editor

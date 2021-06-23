@@ -16,6 +16,9 @@ import java.util.List;
 public class NoteServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //highlight
+        request.setAttribute("menu_page", "note");
+
         // get user behavior
         String actionName = request.getParameter("actionName");
 
