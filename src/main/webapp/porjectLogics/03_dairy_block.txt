@@ -1,0 +1,22 @@
+
+
+user behavior
+publish blog page    actionName=view
+add/modify blog      actionName=addOrUpdate
+details              actionName=detail
+delete blog          actionName=delete
+search blog list     actionName=list
+
+
+
+
+I. publish blog page
+    +++front end
+        navigation dock link - href="note?actionName=view"
+
+    +++back end
+        1. get user object from session
+        2. get type list from userId
+        3. set into request
+        4. dynamically included index page
+        5. request to redirect to index.jsp
