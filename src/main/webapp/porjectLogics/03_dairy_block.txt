@@ -32,4 +32,3 @@ II. load rich text editor
         2. prepare a container， set attributes
         3. load editor
 
-III.
