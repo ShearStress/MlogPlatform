@@ -31,4 +31,4 @@ II. load rich text editor
         1. import js file
         2. prepare a container， set attributes
         3. load editor
-
+III. blog chart submit
