@@ -31,4 +31,33 @@ II. load rich text editor
         1. import js file
         2. prepare a container， set attributes
         3. load editor
-III. blog chart submit
+
+III. publish cloud blog
+
+    +++front end
+        submit chart
+            1. set submission method and submission address
+            2. set actionName in hidden field
+            3. set id and name in form
+
+        form check
+            1. get form unit values
+            2. non-empty parameter check
+
+
+    +++back end
+        web layer:
+            1. receive parameters
+            2. call method in service layer, return resultInfo
+            3. check result
+
+
+        Service layer:
+            1. non empty check
+            2. call method in dao layer
+            3. check result
+
+
+        Dao layer:
+            1. add blog
+
